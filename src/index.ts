@@ -1,13 +1,17 @@
-import express, {Request, Response} from 'express'
-const port = 3000
+import express, {urlencoded} from 'express'
+import bodyParser from "body-parser";
+import {productsRouter} from './router/products-router'
+import {addressesRouter} from "./router/addresses-router";
+
+const PORT = process.env.PORT || 5000
 
 const app = express()
+app.use(bodyParser({}))
+app.use(urlencoded())
 
-app.get('/', (req: Request, res: Response) => {
-  let oleg = "oleg11!";
-  res.send(oleg)
-})
+app.use('/products', productsRouter)
+app.use('/addresses', addressesRouter)
 
-app.listen(port, () => {
-  console.log('server start on http://localhost:%s', port)
+app.listen(PORT, () => {
+  console.log('server start on http://localhost:%s', PORT)
 })
